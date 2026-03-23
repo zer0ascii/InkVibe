@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>InkVibe - Anime Card Game</title>
 
-<!-- Anime Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+JP&display=swap" rel="stylesheet">
 
 <style>
@@ -94,7 +93,7 @@ button:hover {
 <div id="collection"></div>
 
 <script>
-// 🌍 Sprache
+// Sprache
 let lang = "de";
 const text = {
   de: { draw: "Karte ziehen (5 Ink)", daily: "Tägliche Ink holen" },
@@ -102,7 +101,7 @@ const text = {
   jp: { draw: "カードを引く（Ink 5）", daily: "毎日のInkを受け取る" }
 };
 
-// 🔹 Sprache wechseln
+// Sprache wechseln
 function changeLang(l) {
   lang = l;
   document.getElementById("drawBtn").innerText = text[lang].draw;
@@ -110,7 +109,7 @@ function changeLang(l) {
   showCollection();
 }
 
-// 🃏 30 Anime-Karten
+// 30 Anime-Karten
 const cards = [
   {name:{de:"Feuerdrache",en:"Fire Dragon",jp:"火のドラゴン"},type:"Feuer",rarity:"Legendary",img:"https://i.imgur.com/1AqVn7L.png"},
   {name:{de:"Wassergeist",en:"Water Spirit",jp:"水の精霊"},type:"Wasser",rarity:"Epic",img:"https://i.imgur.com/A0jYfQ5.png"},
@@ -144,14 +143,11 @@ const cards = [
   {name:{de:"Monddrache",en:"Moon Dragon",jp:"月のドラゴン"},type:"Schatten",rarity:"Legendary",img:"https://i.imgur.com/B4tT3Zu.png"}
 ];
 
-// 💾 Speicher
+// Speicher
 let collection = JSON.parse(localStorage.getItem("cards")) || [];
 let points = Number(localStorage.getItem("points")) || 0;
 
-// 🔹 Punkte anzeigen
-function updatePoints(){ document.getElementById("pointsDisplay").innerText = "Ink: " + points; }
-
-// 🔹 Tägliche Ink (10 pro Tag)
+// Tägliche Ink (10 pro Tag)
 function collectDailyInk(){
   const today = new Date().toISOString().slice(0,10);
   const lastClaim = localStorage.getItem("lastDaily") || "";
@@ -166,7 +162,7 @@ function collectDailyInk(){
   }
 }
 
-// 🔹 Karte ziehen (5 Ink)
+// Karte ziehen (5 Ink)
 function drawCard(){
   if(points >=5){
     points -=5;
@@ -182,7 +178,7 @@ function drawCard(){
   }
 }
 
-// 🔹 Karte anzeigen
+// Karte anzeigen
 function showCard(c){
   document.getElementById("cardContainer").innerHTML = `
     <div class="card ${c.rarity}">
@@ -192,14 +188,14 @@ function showCard(c){
   `;
 }
 
-// 🔹 Sammlung
+// Sammlung
 function showCollection(){
   let html="";
   collection.forEach(c=>html+=`<p>✧ ${c.name[lang]} (${c.rarity})</p>`);
   document.getElementById("collection").innerHTML = html;
 }
 
-// 🔹 Start
+// Start
 updatePoints();
 showCollection();
 </script>
