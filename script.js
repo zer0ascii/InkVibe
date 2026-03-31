@@ -22,7 +22,8 @@ const enemies = [
   {name:"Goblin",strength:8},
   {name:"Ork",strength:12},
   {name:"Dämon",strength:18},
-  {name:"Drache",strength:30}
+  {name:"Drache",strength:30},
+  {name:"Boss #1: City-Mach",strenght:45}
 ];
 
 // --- Sprache ---
