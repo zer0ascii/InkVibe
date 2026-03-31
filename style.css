@@ -1,0 +1,116 @@
+/* Grundstil */
+body{
+  margin:0;
+  font-family: 'Cinzel', serif;
+  background: radial-gradient(circle at top, #0a0a23, #03010c);
+  color:#e0e0ff;
+  text-align:center;
+}
+
+/* Header */
+.header{
+  background: rgba(0,0,0,0.6);
+  padding: 15px 0;
+  box-shadow: 0 0 30px #7c3aed;
+}
+
+.header h1{
+  font-size:3.5em;
+  text-shadow: 0 0 15px #7c3aed, 0 0 30px #d8b4fe;
+}
+
+/* Panels */
+.panel{
+  background: rgba(10, 5, 30, 0.8);
+  margin: 20px auto;
+  padding:20px;
+  border-radius:25px;
+  box-shadow: 0 0 30px #7c3aed;
+  max-width:800px;
+}
+
+/* Buttons */
+button{
+  padding:12px 20px;
+  margin:8px;
+  border:none;
+  border-radius:15px;
+  background: linear-gradient(45deg, #7c3aed, #d8b4fe);
+  color:white;
+  font-weight:bold;
+  font-size:1em;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #d8b4fe;
+}
+
+/* Draw Animation */
+.draw-animation{
+  font-size:2.5em;
+  margin:20px;
+  height:50px;
+  color:#fcd34d;
+  text-shadow:0 0 10px #fbbf24,0 0 20px #f59e0b;
+  font-weight:bold;
+}
+
+/* Cards */
+.card-container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.card{
+  position:relative;
+  display:inline-block;
+  width:160px;
+  margin:15px;
+  padding:15px;
+  border-radius:20px;
+  border:3px solid white;
+  cursor:pointer;
+  transition:0.3s;
+  background: rgba(15,0,40,0.6);
+  box-shadow:0 0 20px #7c3aed;
+}
+
+.card:hover{
+  transform:scale(1.15);
+  box-shadow:0 0 40px #fbbf24;
+}
+
+/* Selected */
+.selected{
+  outline:4px solid #22c55e;
+}
+
+/* Seltenheit */
+.Common{border-color:gray;}
+.Rare{border-color:#3b82f6; box-shadow:0 0 15px #3b82f6;}
+.Epic{border-color:#a855f7; box-shadow:0 0 25px #a855f7;}
+.Legendary{border-color:gold; box-shadow:0 0 40px gold;}
+
+/* Card text */
+.card h4{
+  margin:5px 0;
+  color:#f0f0ff;
+  font-size:1.1em;
+}
+
+.card p{
+  margin:3px 0;
+  font-size:0.9em;
+  color:#cfcfff;
+}
+
+/* Responsive */
+@media (max-width:600px){
+  .card{width:120px; padding:10px;}
+  .draw-animation{font-size:2em;}
+  .header h1{font-size:2.5em;}
+}
