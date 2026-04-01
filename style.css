@@ -655,3 +655,34 @@ body {
     border-radius: 24px;
   }
 }
+
+.trade-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.section {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 280px;
+  background: #f4f4f4;
+}
+
+.card {
+  border: 1px solid #aaa;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background: white;
+}
+
+button {
+  margin-top: 5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
