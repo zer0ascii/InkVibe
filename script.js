@@ -237,6 +237,32 @@ function renderCollection() {
   grid.innerHTML = ownedCards.map(({ card, count }) => `
     <div onclick="selectCard('${card.id}')">
       ${cardHTML(card, count, state.selectedCardId === card.id)}
+      <button onclick="event.stopPropagation(); createTrade('${card.id}')">
+        🔁 Trade
+      </button>
+    </div>
+  `).join("");
+}
+
+  const ownedCards = Object.entries(state.collection)
+    .map(([id, count]) => ({ card: getCardById(id), count }))
+    .sort((a, b) => {
+      const rarityOrder = { legendary: 4, epic: 3, rare: 2, common: 1 };
+      return rarityOrder[b.card.rarity] - rarityOrder[a.card.rarity] || b.card.power - a.card.power;
+    });
+
+  if (ownedCards.length === 0) {
+    grid.innerHTML = `
+      <div class="collection-empty glass" style="padding:24px;border-radius:22px;">
+        Noch keine Karten. Zieh erstmal deine ersten mystischen Pulls.
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = ownedCards.map(({ card, count }) => `
+    <div onclick="selectCard('${card.id}')">
+      ${cardHTML(card, count, state.selectedCardId === card.id)}
     </div>
   `).join("");
 }
@@ -379,6 +405,63 @@ function fight() {
     state.ink += LOSE_REWARD;
     resultEl.textContent = `💀 ${playerCard.name} verliert gegen ${enemy.name}... (${LOSE_REWARD} Tribut-Zahlung ) [${playerRoll} vs ${enemyRoll}]`;
   }
+
+// =======================
+// 🔁 TRADING SYSTEM
+// =======================
+
+// gespeicherte benutzte Trades
+let usedTrades = JSON.parse(localStorage.getItem("usedTrades") || "[]");
+
+function createTrade(cardId) {
+  if (!state.collection[cardId] || state.collection[cardId] <= 0) {
+    alert("Du hast diese Karte nicht.");
+    return;
+  }
+
+  // Karte entfernen
+  state.collection[cardId]--;
+
+  const tradeData = {
+    cardId: cardId,
+    from: state.username,
+    time: Date.now()
+  };
+
+  const code = btoa(JSON.stringify(tradeData));
+
+  saveGame();
+  renderAll();
+
+  prompt("Sende diesen Trade-Code:", code);
+}
+
+function acceptTrade() {
+  const code = prompt("Trade-Code eingeben:");
+  if (!code) return;
+
+  if (usedTrades.includes(code)) {
+    alert("Dieser Trade wurde schon benutzt.");
+    return;
+  }
+
+  try {
+    const data = JSON.parse(atob(code));
+
+    addCard(data.cardId);
+
+    usedTrades.push(code);
+    localStorage.setItem("usedTrades", JSON.stringify(usedTrades));
+
+    alert(`Trade erhalten! Du hast ${getCardById(data.cardId).name} bekommen.`);
+
+    saveGame();
+    renderAll();
+
+  } catch (e) {
+    alert("Ungültiger Code.");
+  }
+}
 
   saveGame();
   renderTopStats();
