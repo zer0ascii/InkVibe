@@ -377,7 +377,7 @@ function fight() {
     resultEl.textContent = `🏆 ${playerCard.name} besiegt ${enemy.name}! (+${WIN_REWARD} Ink) [${playerRoll} vs ${enemyRoll}]`;
   } else {
     state.ink += LOSE_REWARD;
-    resultEl.textContent = `💀 ${playerCard.name} verliert gegen ${enemy.name}... ({LOSE_REWARD} Tribut-Zahlung ) [${playerRoll} vs ${enemyRoll}]`;
+    resultEl.textContent = `💀 ${playerCard.name} verliert gegen ${enemy.name}... (${LOSE_REWARD} Tribut-Zahlung ) [${playerRoll} vs ${enemyRoll}]`;
   }
 
   saveGame();
