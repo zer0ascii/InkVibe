@@ -216,33 +216,10 @@ function renderLastPull() {
 
 function renderCollection() {
   const grid = document.getElementById("collectionGrid");
-  if (!grid) return;
+  if (!grid) return; 
 
-  const ownedCards = Object.entries(state.collection)
-    .map(([id, count]) => ({ card: getCardById(id), count }))
-    .sort((a, b) => {
-      const rarityOrder = { legendary: 4, epic: 3, rare: 2, common: 1 };
-      return rarityOrder[b.card.rarity] - rarityOrder[a.card.rarity] || b.card.power - a.card.power;
-    });
+} 
 
-  if (ownedCards.length === 0) {
-    grid.innerHTML = `
-      <div class="collection-empty glass" style="padding:24px;border-radius:22px;">
-        Noch keine Karten. Zieh erstmal deine ersten mystischen Pulls.
-      </div>
-    `;
-    return;
-  }
-
-  grid.innerHTML = ownedCards.map(({ card, count }) => `
-    <div onclick="selectCard('${card.id}')">
-      ${cardHTML(card, count, state.selectedCardId === card.id)}
-      <button onclick="event.stopPropagation(); createTrade('${card.id}')">
-        🔁 Trade
-      </button>
-    </div>
-  `).join("");
-}
 
   const ownedCards = Object.entries(state.collection)
     .map(([id, count]) => ({ card: getCardById(id), count }))
