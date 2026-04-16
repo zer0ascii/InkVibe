@@ -11,7 +11,7 @@ const CARD_POOL = [
   { id: "celestial_leviathan", name: "Celestial Leviathan", rarity: "rare", power: 30, quote: "The sky bends around it." },
   { id: "ink_empress", name: "Ink Empress", rarity: "rare", power: 32, quote: "She writes fate in gold." },
   { id: "boss1", name: "Boss #1 ULtra Mech", rarity: "epic", power: 45, quote: "Laser combined with metal." },
-  // EPIC
+
   { id: "pulse-striker-mk2", name: "Pulse Striker MK-II", rarity: "epic", power: 42, quote: "Rhythmic blasts shatter steel." },
   { id: "neon-gear-phantom", name: "Neon Gear Phantom", rarity: "epic", power: 44, quote: "Glows before it strikes." },
   { id: "circuit-breaker-x", name: "Circuit Breaker X", rarity: "epic", power: 46, quote: "Overloads every system." },
@@ -23,7 +23,6 @@ const CARD_POOL = [
   { id: "mecha-pulse-reaver", name: "Mecha Pulse Reaver", rarity: "epic", power: 44, quote: "Harvests energy from chaos." },
   { id: "quantum-beat-enforcer", name: "Quantum Beat Enforcer", rarity: "epic", power: 49, quote: "Time bends to its rhythm." },
 
-// LEGENDARY
   { id: "omega-bass-overlord", name: "Omega Bass Overlord", rarity: "legendary", power: 60, quote: "The final drop ends all." },
   { id: "hyperion-mech-prime", name: "Hyperion Mech Prime", rarity: "legendary", power: 62, quote: "Engineered for domination." },
   { id: "neural-sync-destroyer", name: "Neural Sync Destroyer", rarity: "legendary", power: 59, quote: "Mind and machine unite." },
@@ -89,6 +88,9 @@ let state = {
   lastDaily: null,
   username: "NewInker"
 };
+
+// 🔥 EINZIGE NEUE ZEILE
+let lastFightTime = 0;
 
 function saveGame() {
   localStorage.setItem("inkvibe_save", JSON.stringify(state));
@@ -348,6 +350,13 @@ function renderEnemy(enemy) {
 }
 
 function fight() {
+  const now = Date.now();
+  if (now - lastFightTime < 60000) {
+    document.getElementById("fightResult").textContent = "Warte kurz...";
+    return;
+  }
+  lastFightTime = now;
+
   if (!state.selectedCardId) {
     alert("Wähle zuerst eine Karte aus deiner Collection.");
     return;
