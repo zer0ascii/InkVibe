@@ -76,7 +76,7 @@ const RARITY_COLORS = {
 
 const STARTER_INK = 15;
 const DRAW_COST = 5;
-const DAILY_REWARD = 12;
+const DAILY_REWARD = 15;
 const WIN_REWARD = 7;
 const LOSE_REWARD = -10;
 
@@ -352,7 +352,9 @@ function selectCard(cardId) {
   saveGame();
   renderAll();
 }
-
+function getPresent(PRESENT){
+state.ink += PRESENT
+}
 function randomEnemy() {
   const enemyBase = ENEMY_POOL[Math.floor(Math.random() * ENEMY_POOL.length)];
   const power = Math.floor(Math.random() * (enemyBase.power[1] - enemyBase.power[0] + 1)) + enemyBase.power[0];
