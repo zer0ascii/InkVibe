@@ -79,6 +79,7 @@ const DRAW_COST = 5;
 const DAILY_REWARD = 15;
 const WIN_REWARD = 7;
 const LOSE_REWARD = -10;
+const PRESENT = 1000;
 
 function clampInk() {
   if (state.ink < 0) {
@@ -352,8 +353,8 @@ function selectCard(cardId) {
   saveGame();
   renderAll();
 }
-function getPresent(PRESENT){
-state.ink += PRESENT
+function getPresent(){
+state.ink += PRESENT;
 }
 function randomEnemy() {
   const enemyBase = ENEMY_POOL[Math.floor(Math.random() * ENEMY_POOL.length)];
