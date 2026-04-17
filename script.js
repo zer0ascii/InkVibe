@@ -80,6 +80,12 @@ const DAILY_REWARD = 12;
 const WIN_REWARD = 7;
 const LOSE_REWARD = -10;
 
+function clampInk() {
+  if (state.ink < 0) {
+    state.ink = 0;
+  }
+}
+
 let state = {
   ink: STARTER_INK,
   collection: {},
