@@ -324,7 +324,27 @@ function drawCard() {
   }
 
   saveGame();
-  renderAll();
+
+  const reveal = document.getElementById("drawReveal");
+
+  // 👉 Reset + "Revealing..."
+  reveal.className = "draw-reveal placeholder-card";
+  reveal.innerHTML = `
+    <div class="featured-card-inner">
+      <span class="featured-name">...</span>
+      <span class="featured-rarity">Revealing</span>
+    </div>
+  `;
+
+  // 👉 Kleine Verzögerung für Effekt
+  setTimeout(() => {
+    renderAll();
+
+    // 👉 Animation hinzufügen
+    reveal.classList.add("card-flip");
+    reveal.classList.add(`rarity-glow-${card.rarity}`);
+
+  }, 300);
 }
 
 function selectCard(cardId) {
