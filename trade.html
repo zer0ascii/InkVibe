@@ -2,33 +2,157 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InkVibe QR Trade</title>
-  <link rel="stylesheet" href="style.css">
+  <title>InkVibe Trading (Beta)</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #444;
+      border-radius: 10px;
+    }
+
+    .card {
+      border: 1px solid #666;
+      padding: 8px;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      background: #222;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>InkVibe QR Trade</h1>
+<h1>🔄 InkVibe Trading (Beta)</h1>
 
-  <div class="trade-container">
+<!-- DEINE KARTEN -->
+<div class="section">
+  <h2>Deine Karten</h2>
+  <div id="yourCards"></div>
+  <p id="selectedInfo">Keine Karte ausgewählt</p>
+</div>
 
-    <!-- INVENTAR -->
-    <div class="section">
-      <h2>Dein Inventar</h2>
-      <div id="inventory"></div>
-    </div>
+<!-- CODE ERSTELLEN -->
+<div class="section">
+  <h2>Trade-Code erstellen</h2>
+  <button onclick="generateTradeCode()">Code generieren</button>
+  <input id="tradeCode" readonly placeholder="Hier erscheint dein Code">
+</div>
 
-    <!-- AUSGEWÄHLTE KARTE + QR -->
-    <div class="section">
-      <h2>Trade vorbereiten</h2>
+<!-- CODE EINLÖSEN -->
+<div class="section">
+  <h2>Code einlösen</h2>
+  <input id="redeemInput" placeholder="Code hier einfügen">
+  <button onclick="redeemCode()">Einlösen</button>
+</div>
 
-      <p id="selectedCardText">Keine Karte ausgewählt</p>
-      <button id="generateBtn" onclick="generateSelectedTradeQR()" disabled>
-        QR-Code erzeugen
-      </button>
+<script src="script.js"></script>
 
-      <div id="qrcode"></div>
-      <p id="tradeStatus"></p>
-    </div>
+<script>
+// Lade deinen bestehenden Spielstand
+loadGame();
 
-   
+let selectedCard = null;
+
+// Karten anzeigen
+function renderYourCards() {
+  const container = document.getElementById("yourCards");
+
+  const entries = Object.entries(state.collection);
+
+  if (entries.length === 0) {
+    container.innerHTML = "Du hast noch keine Karten.";
+    return;
+  }
+
+  container.innerHTML = entries.map(([id, count]) => {
+    const card = getCardById(id);
+    return `
+      <div class="card" onclick="selectCard('${id}')">
+        ${card.name} (x${count})
+      </div>
+    `;
+  }).join("");
+}
+
+// Karte auswählen
+function selectCard(id) {
+  selectedCard = id;
+  document.getElementById("selectedInfo").textContent =
+    "Ausgewählt: " + getCardById(id).name;
+}
+
+// CODE GENERIEREN
+function generateTradeCode() {
+  if (!selectedCard) {
+    alert("Bitte zuerst eine Karte auswählen!");
+    return;
+  }
+
+  const data = {
+    cardId: selectedCard,
+    time: Date.now()
+  };
+
+  const code = btoa(JSON.stringify(data));
+
+  document.getElementById("tradeCode").value = code;
+}
+
+// CODE EINLÖSEN
+function redeemCode() {
+  const input = document.getElementById("redeemInput").value;
+
+  if (!input) {
+    alert("Bitte Code eingeben!");
+    return;
+  }
+
+  try {
+    const data = JSON.parse(atob(input));
+    const cardId = data.cardId;
+
+    // Karte hinzufügen
+    state.collection[cardId] = (state.collection[cardId] || 0) + 1;
+
+    saveGame();
+    renderYourCards();
+
+    alert("🎉 Du hast erhalten: " + getCardById(cardId).name);
+
+  } catch (e) {
+    alert("Ungültiger Code!");
+  }
+}
+
+// Initial render
+renderYourCards();
+</script>
+
+</body>
+</html>
