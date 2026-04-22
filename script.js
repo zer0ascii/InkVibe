@@ -50,14 +50,14 @@ const ENEMY_POOL = [
   { name: "Quantum Annihilator X", power: [34, 46] },
   { name: "Dark Pulse Executioner", power: [30, 43] },
   { name: "Hyperion Chaos Engine", power: [37, 52] },
-  { name: "Singularity Warbringer", power: [38, 55] }
+  { name: "Singularity Warbringer", power: [38, 1000] }
 ];
 
 const RARITY_WEIGHTS = [
   { rarity: "common", chance: 55 },
   { rarity: "rare", chance: 28 },
   { rarity: "epic", chance: 13 },
-  { rarity: "legendary", chance: 4 }
+  { rarity: "legendary", chance: 1 }
 ];
 
 const RARITY_LABELS = {
